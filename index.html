@@ -25,71 +25,6 @@
             overflow: hidden;
             background-image: linear-gradient(240deg, rgb(87, 249, 249) 30%, rgb(245, 245, 245) 150%);
         }
-        .multipleSelect{
-            position: relative;
-            min-width: 200px;
-            border: 1px solid #BDBDBD;
-            border-bottom: none;
-        }
-        .first{
-            position: relative;
-            border-bottom: 1px solid #BDBDBD;
-            overflow: hidden;
-            height: 29px;
-        }
-        .first::before{
-            content: '';
-            position: absolute;
-            background-color: white;
-            right: 0;
-            width: 25px;
-            height: 100%;
-        }
-        .first::after{
-            content: ''; /* ↓ */
-            position: absolute;
-            right: 3%;
-            top: 45%;
-            border: 4px solid transparent;
-            border-top-color: black;
-        }
-        .first.open::after{
-            content: ''; /* ↓ */
-            position: absolute;
-            right: 3%;
-            top: 25%;
-            border: 4px solid transparent;
-            border-bottom-color: black;
-        }
-        #options{
-            position: absolute;
-            min-width: 100%;
-            display: none;
-            background-color:white;
-            border: 1px solid gray;
-            max-height: 150px;
-            overflow: auto;
-            z-index: 9999999999999999;
-        }
-        #options > option{
-            height: 25px;
-        }
-        .first, #options > option{
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            padding-left: 5px;
-            padding-right: 5px;
-            user-select: none;
-        }
-        #options > option:hover{
-            background-color: rgb(18, 140, 233);
-            color: white;
-        }
-        .multipleSelect.required, .first.required{
-            background-color: #FFFFC0;
-        }
-
         #footer {
             position: absolute;
             bottom: 0;
@@ -124,105 +59,11 @@
         }
     </style>
 
+    <link rel="stylesheet" href="multiselect.css">
+    <script src="multiselect.js"></script>
+
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function(){
-
-            document.querySelectorAll("select[multiple]").forEach(elem => {
-                let id = elem.id;
-                let classe = elem.className;
-                let estilo = elem.getAttribute('style');
-                let pai = elem.parentNode;
-                let opt = [];
-                for (let i = 0; i < elem.options.length; i++) {
-                    let obj = {value: elem.options[i].value, text: elem.options[i].innerHTML};
-                    opt.push(obj);
-                }
-                elem.remove();
-                let multiSelect = document.createElement('div');
-                /* multiSelect.id = id; */
-                multiSelect.classList = 'multipleSelect ' + classe;
-                multiSelect.style = estilo;
-                let first = document.createElement('option');
-                first.id = id;
-                first.classList = 'first';
-                first.value = '[]';
-                multiSelect.appendChild(first);
-                let optionText = document.createElement('option');
-                optionText.classList = 'optionText';
-                optionText.value = '[]';
-                optionText.hidden = true;
-                multiSelect.appendChild(optionText);
-                let options = document.createElement('div');
-                options.id = 'options';
-                for (let i = 0; i < opt.length; i++) {
-                    let op = document.createElement('option');
-                    if(opt[i].value != opt[i].innerHTML)
-                        op.value = opt[i].value;
-                    op.innerHTML = opt[i].text;
-                    options.appendChild(op);
-                }
-                multiSelect.appendChild(options);
-                pai.appendChild(multiSelect);
-            });
-
-            document.addEventListener('click', function(e){
-                if(e.path.indexOf(document.querySelector('.multipleSelect')) < 0){
-                    document.querySelector("#options").style.display = 'none';
-                    document.querySelector(".first").classList.remove('open');
-                }
-            });
-
-            document.querySelector(".first").addEventListener('click', function(){
-                if(document.querySelector("#options").style.display == 'block'){
-                    document.querySelector("#options").style.display = 'none';   
-                    this.classList.remove('open');
-                }else{
-                    document.querySelector("#options").style.display = 'block';
-                    this.classList.add('open');
-                }
-            });
-
-            document.querySelectorAll("#options > option").forEach(elem => {
-                elem.addEventListener('click', function(){
-                    let add = 0;
-                    if(this.style.backgroundColor == 'rgb(2, 100, 174)'){
-                        this.style.backgroundColor = '';
-                        this.style.color = '';
-                    }else{
-                        this.style.backgroundColor = 'rgb(2, 100, 174)';
-                        this.style.color = 'white';
-                        add = 1;
-                    }
-                    let text = '';
-                    let optionText = JSON.parse(document.querySelector(".optionText").value);
-                    let json = JSON.parse(document.querySelector(".first").value);
-                    let index = json.length;
-                    for (let x = 0; x < json.length; x++) {
-                        if(json[x] == this.value){
-                            index = x;
-                        }
-                    }
-                    if(add){
-                        json[index] = this.value;
-                        optionText[index] = this.textContent;
-                    }else{
-                        json.splice(index, 1);
-                        optionText.splice(index, 1);
-                    }
-                    for (let i = 0; i < optionText.length; i++) {
-                        if(i > 1){
-                            text += ', '+ optionText[i] + ' ...'; 
-                            break;
-                        }
-                        text += (i == 0 ? optionText[i] : ', '+optionText[i]);
-                    }
-                    document.querySelector(".first").textContent = text;
-                    document.querySelector(".first").value = JSON.stringify(json);
-                    document.querySelector(".optionText").value = JSON.stringify(optionText);
-                    document.querySelector(".first").dispatchEvent(new Event('change'));
-                });
-            });
-
             document.querySelector(".first").addEventListener('change', function(e){
                 array = JSON.parse(this.value);
                 document.querySelector("#test").value = '';
