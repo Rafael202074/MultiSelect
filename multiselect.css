@@ -3,6 +3,7 @@
     min-width: 200px;
     border: 1px solid #BDBDBD;
     border-bottom: none;
+    font:'Open Sans',Helvetica,Arial,sans-serif;
 }
 .first{
     position: relative;
@@ -40,7 +41,7 @@
     display: none;
     background-color:white;
     border: 1px solid gray;
-    max-height: 150px;
+    max-height: 250px;
     overflow: auto;
     z-index: 9999999999999999;
 }
