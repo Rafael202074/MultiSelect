@@ -1,0 +1,64 @@
+.multipleSelect{
+    position: relative;
+    min-width: 200px;
+    border: 1px solid #BDBDBD;
+    border-bottom: none;
+}
+.first{
+    position: relative;
+    border-bottom: 1px solid #BDBDBD;
+    overflow: hidden;
+    height: 29px;
+}
+.first::before{
+    content: '';
+    position: absolute;
+    background-color: white;
+    right: 0;
+    width: 25px;
+    height: 100%;
+}
+.first::after{
+    content: ''; /* ↓ */
+    position: absolute;
+    right: 3%;
+    top: 45%;
+    border: 4px solid transparent;
+    border-top-color: black;
+}
+.first.open::after{
+    content: ''; /* ↓ */
+    position: absolute;
+    right: 3%;
+    top: 25%;
+    border: 4px solid transparent;
+    border-bottom-color: black;
+}
+#options{
+    position: absolute;
+    min-width: 100%;
+    display: none;
+    background-color:white;
+    border: 1px solid gray;
+    max-height: 150px;
+    overflow: auto;
+    z-index: 9999999999999999;
+}
+#options > option{
+    height: 25px;
+}
+.first, #options > option{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding-left: 5px;
+    padding-right: 5px;
+    user-select: none;
+}
+#options > option:hover{
+    background-color: rgb(18, 140, 233);
+    color: white;
+}
+.multipleSelect.required, .first.required{
+    background-color: #FFFFC0;
+}
