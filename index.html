@@ -122,6 +122,13 @@
         a:hover{
             text-decoration: none;
         }
+        .lbl{
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 1px;
+        }
     </style>
 
     <script type="text/javascript">
@@ -245,8 +252,10 @@
             <option>vrau4</option>
         </div>
     </div> -->
-    
-    <input type="text" name="test" id="test" style="width: 300px; height: 25px; background-color: white; border: none; padding-left: 7px;">
+    <div class="lbl">
+        <label for="test">Teste:</label>
+        <input type="text" name="test" id="test" style="width: 300px; height: 27px; background-color: white; border: none; padding-left: 7px;">
+    </div>
 
     <section class="col col-3 col-auto" style="width: 250px;">
         <label class="label" for="projeto">MultiSelect</label>
